@@ -6,7 +6,7 @@
 /*   By: dleong <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/08 14:59:46 by dleong            #+#    #+#             */
-/*   Updated: 2017/12/12 22:42:39 by dleong           ###   ########.fr       */
+/*   Updated: 2017/12/13 13:44:48 by dleong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,12 @@ typedef struct		s_master
 	t_point			*point;
 	int				total_column;
 	int				total_row;
+	int				total_node;
 }					t_master;
 
 int					parse(int fd, t_master *master);
+void				map_down(t_master *master);
+void				map_right(t_master *master);
 int					key_hook(int keycode, void *param);
 int					get_hook(t_master *master);
 
