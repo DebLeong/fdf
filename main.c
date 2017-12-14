@@ -6,7 +6,7 @@
 /*   By: dleong <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 18:16:05 by dleong            #+#    #+#             */
-/*   Updated: 2017/12/14 01:10:20 by dleong           ###   ########.fr       */
+/*   Updated: 2017/12/14 02:54:02 by dleong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,15 @@ void	print_list(t_fdf *fdf)
 	while (fdf->pt && fdf->pt->next)
 	{
 		printf("node_curr %i\n", fdf->pt->node);
+		/*
 		printf("x: %f\n", fdf->pt->cd.x);
 		printf("y: %f\n", fdf->pt->cd.y);
 		printf("z: %f\n", fdf->pt->cd.z);
-		/*
+		*/
 		if (fdf->pt->right)
 			printf("node_right: %i\n", fdf->pt->right->node);
 		if (fdf->pt->down)
 			printf("node_down: %i\n", fdf->pt->down->node);
-		*/
 		fdf->pt = fdf->pt->next;
 		i++;
 	}
@@ -84,7 +84,7 @@ int main(int argc, char **argv)
 		fdf.max = fdf.total_col;
 	else
 		fdf.max = fdf.total_row;
-	fdf.gap = 700 / fdf.max;
+	fdf.gap = 800 / fdf.max;
 
 	make_pixel_cd(&fdf);
 	rotate(&fdf);
@@ -92,7 +92,7 @@ int main(int argc, char **argv)
 	draw_line(&fdf);
 
 	//REMOVE THISSSSSSSSSSSSSSSSSSSSSSSSSS
-	print_list(&fdf);
+	//print_list(&fdf);
 
 	close (fd);
 

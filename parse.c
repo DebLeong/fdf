@@ -6,7 +6,7 @@
 /*   By: dleong <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 23:50:32 by dleong            #+#    #+#             */
-/*   Updated: 2017/12/14 01:05:18 by dleong           ###   ########.fr       */
+/*   Updated: 2017/12/14 02:37:10 by dleong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	make_pixel_cd(t_fdf *fdf)
 	{
 		fdf->pt->cd.x = (fdf->pt->cd.x - fdf->total_col / 2) * fdf->gap;
 		fdf->pt->cd.y = (fdf->pt->cd.y - fdf->total_row / 2) * fdf->gap;
-		fdf->pt->cd.z = fdf->pt->cd.z * 5;
+		//fdf->pt->cd.z = fdf->pt->cd.z * 5;
 		fdf->pt = fdf->pt->next;
 		i++;
 	}
@@ -72,7 +72,7 @@ void	map_right(t_fdf *fdf)
 	head = fdf->pt;
 	while (i < fdf->total_node)
 	{
-		if (i == 0)
+		if (i == 0 || i == 198)
 			fdf->pt->right = fdf->pt->next;
 		if (((i % (fdf->total_col - 1)) != 0) && (i != 0))
 			fdf->pt->right = fdf->pt->next;

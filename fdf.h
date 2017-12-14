@@ -1,4 +1,5 @@
 /* ************************************************************************** */
+
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
@@ -6,7 +7,7 @@
 /*   By: dleong <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/08 14:59:46 by dleong            #+#    #+#             */
-/*   Updated: 2017/12/14 01:10:17 by dleong           ###   ########.fr       */
+/*   Updated: 2017/12/14 01:22:38 by dleong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +46,7 @@ typedef struct		s_bres
 	double			dy;
 	int				swap;
 	double			tmp;
+	int				end;
 	int				s1;
 	int				s2;
 	double			p;
@@ -82,7 +84,7 @@ void				make_pixel_cd(t_fdf *fdf);
 void				translate(t_fdf *fdf);
 void				rotate(t_fdf *fdf);
 void				draw_line(t_fdf *fdf);
-int					sign(int x);
+double				sign(int x, t_fdf *fdf);
 void				bresenhams(double x1, double y1, double x2, double y2, t_fdf *fdf);
 
 int					key_hook(int keycode, void *param);
