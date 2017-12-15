@@ -1,5 +1,4 @@
 /* ************************************************************************** */
-
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
@@ -7,7 +6,7 @@
 /*   By: dleong <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/08 14:59:46 by dleong            #+#    #+#             */
-/*   Updated: 2017/12/14 01:22:38 by dleong           ###   ########.fr       */
+/*   Updated: 2017/12/15 02:07:36 by dleong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +15,6 @@
 # include "libft/libft.h"
 # include "libft/get_next_line.h"
 # include "minilibx/mlx.h"
-# include <stdio.h>
 # include <fcntl.h>
 # include <math.h>
 # include <stdlib.h>
@@ -24,10 +22,18 @@
 
 typedef struct		s_cd
 {
-	double			x;
-	double			y;
-	double			z;
+	float			x;
+	float			y;
+	float			z;
 }					t_cd;
+
+typedef struct		s_count
+{
+	int				x;
+	int				y;
+	int				z;
+	int				i;
+}					t_count;
 
 typedef struct		s_pt
 {
@@ -40,25 +46,27 @@ typedef struct		s_pt
 
 typedef struct		s_bres
 {
-	double			x;
-	double			y;
-	double			dx;
-	double			dy;
+	float			x;
+	float			y;
+	float			dx;
+	float			dy;
 	int				swap;
-	double			tmp;
+	float			tmp;
 	int				end;
-	int				s1;
-	int				s2;
-	double			p;
-	int				i;
+	float			s1;
+	float			s2;
+	float			p;
+	float			i;
 }					t_bres;
 
 typedef struct		s_bres_cd
 {
-	double			x1;
-	double			y1;
-	double			x2;
-	double			y2;
+	float			*xy1;
+	float			*xy2;
+	float			x1;
+	float			y1;
+	float			x2;
+	float			y2;
 }					t_bres_cd;
 
 typedef struct		s_fdf
@@ -69,25 +77,25 @@ typedef struct		s_fdf
 	t_pt			*pt;
 	int				total_col;
 	int				total_row;
+	int				total_z;
 	int				total_node;
-	int				win_mid_x;
-	int				win_mid_y;
+	int				win_x;
+	int				win_y;
 	int				gap;
-	int				max;
+	float			max;
 }					t_fdf;
 
+int					read_file(int fd, t_fdf *fdf);
+void				initiate(t_fdf *fdf);
 int					parse(int fd, t_fdf *fdf);
 void				map_right(t_fdf *fdf);
-void				map_down(t_fdf *fdf);
+void				map_down(t_fdf *fdf, int a, int start, int i);
 void				make_pixel_cd(t_fdf *fdf);
-
 void				translate(t_fdf *fdf);
 void				rotate(t_fdf *fdf);
 void				draw_line(t_fdf *fdf);
-double				sign(int x, t_fdf *fdf);
-void				bresenhams(double x1, double y1, double x2, double y2, t_fdf *fdf);
-
+float				sign(int x);
+void				b_algo(float x1, float y1, float x2, float y2, t_fdf *fdf);
 int					key_hook(int keycode, void *param);
-//int				get_hook(t_fdf *fdf);
 
 #endif

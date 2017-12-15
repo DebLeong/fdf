@@ -6,7 +6,7 @@
 /*   By: dleong <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 23:50:32 by dleong            #+#    #+#             */
-/*   Updated: 2017/12/14 02:37:10 by dleong           ###   ########.fr       */
+/*   Updated: 2017/12/15 01:45:58 by dleong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,32 +16,28 @@ void	make_pixel_cd(t_fdf *fdf)
 {
 	t_pt	*head;
 	int		i;
+	int		j;
 
 	i = 0;
+	j = 1;
 	head = fdf->pt;
 	while (i <= fdf->total_node)
 	{
 		fdf->pt->cd.x = (fdf->pt->cd.x - fdf->total_col / 2) * fdf->gap;
 		fdf->pt->cd.y = (fdf->pt->cd.y - fdf->total_row / 2) * fdf->gap;
-		//fdf->pt->cd.z = fdf->pt->cd.z * 5;
+		fdf->pt->cd.z = fdf->pt->cd.z * 10;
 		fdf->pt = fdf->pt->next;
 		i++;
 	}
 	fdf->pt = head;
 }
 
-void	map_down(t_fdf *fdf)
+void	map_down(t_fdf *fdf, int a, int start, int i)
 {
 	t_pt	*head;
-	t_pt *current;
-	t_pt *tmp;
-	int i;
-	int a;
-	int start;
+	t_pt	*current;
+	t_pt	*tmp;
 
-	i = 0;
-	a = 1;
-	start = 0;
 	head = fdf->pt;
 	current = fdf->pt;
 	while (i < (fdf->total_node - fdf->total_col + 1))
@@ -72,9 +68,9 @@ void	map_right(t_fdf *fdf)
 	head = fdf->pt;
 	while (i < fdf->total_node)
 	{
-		if (i == 0 || i == 198)
+		if (i == 0)
 			fdf->pt->right = fdf->pt->next;
-		if (((i % (fdf->total_col - 1)) != 0) && (i != 0))
+		if ((((i + 1) % (fdf->total_col)) != 0) && (i != 0))
 			fdf->pt->right = fdf->pt->next;
 		fdf->pt = fdf->pt->next;
 		i++;
@@ -82,48 +78,42 @@ void	map_right(t_fdf *fdf)
 	fdf->pt = head;
 }
 
-int	parse(int fd, t_fdf *fdf)
+int		parse(int fd, t_fdf *fdf)
 {
 	char	*line;
-	t_pt *head;
-	int		x;
-	int		y;
-	int		z;
-	int		i;
+	t_pt	*head;
+	t_count	count;
 
-	x = 0;
-	y = 0;
-	z = 0;
-	i = 0;
-	// MALLOCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+	count.x = -1;
+	count.y = 0;
+	count.z = -1;
+	count.i = -1;
 	fdf->pt = ft_memalloc(sizeof(t_pt));
 	head = fdf->pt;
 	while (get_next_line(fd, &line) == 1)
 	{
 		if (!(fdf->map_line = ft_strsplit(line, ' ')))
 			return (0);
-		while ((fdf->map_line)[x])
+		while ((fdf->map_line)[++count.x])
 		{
-			fdf->pt->node = i;
-			(fdf->pt->cd).x = x;
-			(fdf->pt->cd).y = y;
-			(fdf->pt->cd).z = ft_atoi(fdf->map_line[z]);
-			x++;
-			z++;
-			// MALLOCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+			fdf->pt->node = ++count.i;
+			fdf->pt->cd.x = count.x;
+			fdf->pt->cd.y = count.y;
+			fdf->pt->cd.z = ft_atoi(fdf->map_line[++count.z]);
+			if (fdf->pt->cd.z > fdf->total_z)
+				fdf->total_z = fdf->pt->cd.z;
 			fdf->pt->next = ft_memalloc(sizeof(t_pt));
 			fdf->pt = fdf->pt->next;
-			i++;
 		}
-		fdf->total_col = x;
-		x = 0;
-		z = 0;
-		y++;
-		free (line);
+		fdf->total_col = count.x;
+		count.x = -1;
+		count.z = -1;
+		count.y++;
+		free(line);
 		line = 0;
 	}
-	fdf->total_row = y;
-	fdf->total_node = i - 1;
+	fdf->total_row = count.y;
+	fdf->total_node = count.i;
 	fdf->pt = head;
 	return (1);
 }
