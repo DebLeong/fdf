@@ -6,7 +6,7 @@
 /*   By: dleong <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 03:31:13 by dleong            #+#    #+#             */
-/*   Updated: 2017/12/15 05:32:57 by dleong           ###   ########.fr       */
+/*   Updated: 2017/12/15 05:40:18 by dleong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	check_line(char *str)
 		ft_error("Error: reading line");
 	while (str[i] != '\0')
 	{
-		if (ft_isalpha(str[i] == 1))
+		if (ft_isalpha(str[i]) == 1)
 			ft_error("Error: found alphabet chars");
 		if ((str[i] == '-' && !(ft_isdigit(str[i + 1]))) ||
 			str[i] == '\t')
