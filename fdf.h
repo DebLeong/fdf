@@ -6,7 +6,7 @@
 /*   By: dleong <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/08 14:59:46 by dleong            #+#    #+#             */
-/*   Updated: 2017/12/15 02:07:36 by dleong           ###   ########.fr       */
+/*   Updated: 2017/12/15 02:29:42 by dleong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,10 @@ typedef struct		s_bres_cd
 
 typedef struct		s_fdf
 {
+	float 			x1;
+	float 			x2;
+	float			y1;
+	float 			y2;
 	void			*mlx;
 	void			*win;
 	char			**map_line;
@@ -93,9 +97,9 @@ void				map_down(t_fdf *fdf, int a, int start, int i);
 void				make_pixel_cd(t_fdf *fdf);
 void				translate(t_fdf *fdf);
 void				rotate(t_fdf *fdf);
-void				draw_line(t_fdf *fdf);
+void				draw_line(t_fdf *fdf, int i);
 float				sign(int x);
-void				b_algo(float x1, float y1, float x2, float y2, t_fdf *fdf);
+void				b_algo(t_fdf *fdf);
 int					key_hook(int keycode, void *param);
 
 #endif

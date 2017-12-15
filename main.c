@@ -68,7 +68,7 @@ int		main(int argc, char **argv)
 	make_pixel_cd(&fdf);
 	rotate(&fdf);
 	translate(&fdf);
-	draw_line(&fdf);
+	draw_line(&fdf, 0);
 	close(fd);
 	mlx_key_hook(fdf.win, key_hook, &fdf);
 	mlx_loop(fdf.mlx);

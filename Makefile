@@ -12,9 +12,9 @@
 
 NAME = fdf
 
-SRC = main.c parse.c draw.c
+SRC = main.c parse.c draw.c rotate_translate.c
 
-OBJ = main.o parse.o draw.o
+OBJ = main.o parse.o draw.o rotate_translate.o
 
 all: $(NAME)
 
