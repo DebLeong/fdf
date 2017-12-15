@@ -6,7 +6,7 @@
 /*   By: dleong <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/08 14:59:46 by dleong            #+#    #+#             */
-/*   Updated: 2017/12/15 02:29:42 by dleong           ###   ########.fr       */
+/*   Updated: 2017/12/15 05:38:25 by dleong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct		s_fdf
 	void			*mlx;
 	void			*win;
 	char			**map_line;
+	char			*line;
 	t_pt			*pt;
 	int				total_col;
 	int				total_row;
@@ -89,7 +90,10 @@ typedef struct		s_fdf
 	float			max;
 }					t_fdf;
 
-int					read_file(int fd, t_fdf *fdf);
+void				ft_error(char *str);
+void				check_line(char *str);
+void				check_width(int fd, int i, t_fdf *fdf);
+int					read_file(int fd, t_fdf *fdf, char *argv1);
 void				initiate(t_fdf *fdf);
 int					parse(int fd, t_fdf *fdf);
 void				map_right(t_fdf *fdf);
@@ -99,6 +103,7 @@ void				translate(t_fdf *fdf);
 void				rotate(t_fdf *fdf);
 void				draw_line(t_fdf *fdf, int i);
 float				sign(int x);
+void				set_bres(t_bres *bres, t_fdf *fdf, int swap);
 void				b_algo(t_fdf *fdf);
 int					key_hook(int keycode, void *param);
 

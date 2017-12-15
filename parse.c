@@ -6,7 +6,7 @@
 /*   By: dleong <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 23:50:32 by dleong            #+#    #+#             */
-/*   Updated: 2017/12/15 03:22:28 by dleong           ###   ########.fr       */
+/*   Updated: 2017/12/15 05:38:37 by dleong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ void	map_right(t_fdf *fdf)
 
 int		parse(int fd, t_fdf *fdf)
 {
-	char	*line;
 	t_pt	*head;
 	t_count	count;
 
@@ -90,10 +89,9 @@ int		parse(int fd, t_fdf *fdf)
 	count.i = -1;
 	fdf->pt = ft_memalloc(sizeof(t_pt));
 	head = fdf->pt;
-	while (get_next_line(fd, &line) == 1)
+	while (get_next_line(fd, &fdf->line) == 1)
 	{
-		if (!(fdf->map_line = ft_strsplit(line, ' ')))
-			return (0);
+		fdf->map_line = ft_strsplit(fdf->line, ' ');
 		while ((fdf->map_line)[++count.x])
 		{
 			fdf->pt->node = ++count.i;
@@ -105,14 +103,10 @@ int		parse(int fd, t_fdf *fdf)
 			fdf->pt->next = ft_memalloc(sizeof(t_pt));
 			fdf->pt = fdf->pt->next;
 		}
-		fdf->total_col = count.x;
 		count.x = -1;
 		count.z = -1;
 		count.y++;
-		free(line);
-		line = 0;
 	}
-	fdf->total_row = count.y;
 	fdf->total_node = count.i;
 	fdf->pt = head;
 	return (1);

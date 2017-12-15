@@ -6,11 +6,17 @@
 /*   By: dleong <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 18:16:05 by dleong            #+#    #+#             */
-/*   Updated: 2017/12/15 01:05:22 by dleong           ###   ########.fr       */
+/*   Updated: 2017/12/15 05:38:45 by dleong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void	ft_error(char *str)
+{
+	ft_putendl(str);
+	exit(0);
+}
 
 int		key_hook(int keycode, void *param)
 {
@@ -35,13 +41,13 @@ void	initiate(t_fdf *fdf)
 	fdf->win = mlx_new_window(fdf->mlx, fdf->win_x, fdf->win_y, "FdF 42");
 }
 
-int		read_file(int fd, t_fdf *fdf)
+int		read_file(int fd, t_fdf *fdf, char *argv1)
 {
+	check_width(fd, 0, fdf);
+	close(fd);
+	fd = open(argv1, O_RDONLY);
 	if (!(parse(fd, fdf)))
-	{
-		write(1, "Error\n", 6);
-		return (0);
-	}
+		ft_error("Error");
 	map_right(fdf);
 	map_down(fdf, 1, 0, 0);
 	return (1);
@@ -53,16 +59,12 @@ int		main(int argc, char **argv)
 	int		fd;
 
 	if (argc != 2)
-	{
-		ft_putendl("Usage: ./fdf <filename>");
-		return (0);
-	}
+		ft_error("Usage: ./fdf <filename>");
 	if ((fd = open(argv[1], O_RDONLY)) < 0)
-	{
-		ft_putendl("Error reading file");
-		return (0);
-	}
-	if (!(read_file(fd, &fdf)))
+		ft_error("Error: opening file");
+	if (ft_strstr(argv[1], ".fdf") == 0)
+		ft_error("Error: filename does not contain fdf");
+	if (!(read_file(fd, &fdf, argv[1])))
 		return (0);
 	initiate(&fdf);
 	make_pixel_cd(&fdf);
