@@ -6,7 +6,7 @@
 /*   By: dleong <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/08 14:59:46 by dleong            #+#    #+#             */
-/*   Updated: 2017/12/15 05:38:25 by dleong           ###   ########.fr       */
+/*   Updated: 2017/12/15 06:43:22 by dleong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,10 @@ typedef struct		s_bres_cd
 
 typedef struct		s_fdf
 {
-	float 			x1;
-	float 			x2;
+	float			x1;
+	float			x2;
 	float			y1;
-	float 			y2;
+	float			y2;
 	void			*mlx;
 	void			*win;
 	char			**map_line;
@@ -95,7 +95,8 @@ void				check_line(char *str);
 void				check_width(int fd, int i, t_fdf *fdf);
 int					read_file(int fd, t_fdf *fdf, char *argv1);
 void				initiate(t_fdf *fdf);
-int					parse(int fd, t_fdf *fdf);
+void				set_count(t_count *count);
+int					parse(int fd, t_fdf *fdf, t_count count);
 void				map_right(t_fdf *fdf);
 void				map_down(t_fdf *fdf, int a, int start, int i);
 void				make_pixel_cd(t_fdf *fdf);

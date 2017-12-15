@@ -6,7 +6,7 @@
 /*   By: dleong <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 23:50:32 by dleong            #+#    #+#             */
-/*   Updated: 2017/12/15 05:38:37 by dleong           ###   ########.fr       */
+/*   Updated: 2017/12/15 06:44:20 by dleong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,15 +78,18 @@ void	map_right(t_fdf *fdf)
 	fdf->pt = head;
 }
 
-int		parse(int fd, t_fdf *fdf)
+void	set_count(t_count *count)
+{
+	count->y = 0;
+	count->i = -1;
+	count->x = -1;
+	count->z = -1;
+}
+
+int		parse(int fd, t_fdf *fdf, t_count count)
 {
 	t_pt	*head;
-	t_count	count;
 
-	count.x = -1;
-	count.y = 0;
-	count.z = -1;
-	count.i = -1;
 	fdf->pt = ft_memalloc(sizeof(t_pt));
 	head = fdf->pt;
 	while (get_next_line(fd, &fdf->line) == 1)

@@ -6,7 +6,7 @@
 /*   By: dleong <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 18:16:05 by dleong            #+#    #+#             */
-/*   Updated: 2017/12/15 05:38:45 by dleong           ###   ########.fr       */
+/*   Updated: 2017/12/15 06:44:32 by dleong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,16 @@ void	initiate(t_fdf *fdf)
 
 int		read_file(int fd, t_fdf *fdf, char *argv1)
 {
+	t_count	count;
+
+	count.y = 0;
+	count.i = -1;
+	count.x = -1;
+	count.z = -1;
 	check_width(fd, 0, fdf);
 	close(fd);
 	fd = open(argv1, O_RDONLY);
-	if (!(parse(fd, fdf)))
+	if (!(parse(fd, fdf, count)))
 		ft_error("Error");
 	map_right(fdf);
 	map_down(fdf, 1, 0, 0);
