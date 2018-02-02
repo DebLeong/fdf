@@ -6,7 +6,7 @@
 /*   By: dleong <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 03:04:36 by dleong            #+#    #+#             */
-/*   Updated: 2017/12/15 03:05:03 by dleong           ###   ########.fr       */
+/*   Updated: 2018/02/02 10:05:11 by dleong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,61 @@ void	translate(t_fdf *fdf)
 	{
 		fdf->pt->cd.x = fdf->pt->cd.x + (fdf->win_x / 2);
 		fdf->pt->cd.y = fdf->pt->cd.y + (fdf->win_y / 2);
+		fdf->pt = fdf->pt->next;
+		i++;
+	}
+	fdf->pt = head;
+}
+
+void	re_translate(t_fdf *fdf)
+{
+	t_pt	*head;
+	int		i;
+
+	i = 0;
+	head = fdf->pt;
+	while (i <= fdf->total_node)
+	{
+		fdf->pt->cd.x += fdf->change_x;
+		fdf->pt->cd.y += fdf->change_y;
+		fdf->pt = fdf->pt->next;
+		i++;
+	}
+	fdf->pt = head;
+}
+
+void	scaling(t_fdf *fdf)
+{
+	t_pt	*head;
+	int		i;
+
+	i = 0;
+	head = fdf->pt;
+	while (i <= fdf->total_node)
+	{
+		fdf->pt->cd.x = ((fdf->pt->cd.x - fdf->win_x / 2) * fdf->change_x) + \
+			fdf->win_x / 2;
+		fdf->pt->cd.y = ((fdf->pt->cd.y - fdf->win_y / 2) * fdf->change_y) + \
+			fdf->win_y / 2;
+		fdf->pt = fdf->pt->next;
+		i++;
+	}
+	fdf->pt = head;
+}
+
+void	z_scaling(t_fdf *fdf)
+{
+	t_pt	*head;
+	int		i;
+
+	i = 0;
+	head = fdf->pt;
+	while (i <= fdf->total_node)
+	{
+		if (fdf->change_z > 0)
+			fdf->pt->cd.y = fdf->pt->cd.y - fdf->pt->cd.z * sin(0.15);
+		else
+			fdf->pt->cd.y = fdf->pt->cd.y - fdf->pt->cd.z * sin(-0.15);
 		fdf->pt = fdf->pt->next;
 		i++;
 	}

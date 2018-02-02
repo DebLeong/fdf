@@ -6,7 +6,7 @@
 /*   By: dleong <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 03:31:13 by dleong            #+#    #+#             */
-/*   Updated: 2017/12/15 06:38:17 by dleong           ###   ########.fr       */
+/*   Updated: 2018/02/02 12:52:29 by dleong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void	check_width(int fd, int i, t_fdf *fdf)
 			i++;
 		fdf->total_col = i;
 		fdf->total_row += 1;
+		free_2d(&fdf->map_line);
+		ft_strdel(&fdf->line);
 	}
 	else
 		ft_error("Empty File");
@@ -55,5 +57,7 @@ void	check_width(int fd, int i, t_fdf *fdf)
 		if (i != fdf->total_col)
 			ft_error("Error: width");
 		fdf->total_row += 1;
+		free_2d(&fdf->map_line);
+		ft_strdel(&fdf->line);
 	}
 }

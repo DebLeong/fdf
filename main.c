@@ -6,7 +6,7 @@
 /*   By: dleong <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 18:16:05 by dleong            #+#    #+#             */
-/*   Updated: 2017/12/15 06:44:32 by dleong           ###   ########.fr       */
+/*   Updated: 2018/02/02 12:22:46 by dleong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,45 +18,11 @@ void	ft_error(char *str)
 	exit(0);
 }
 
-int		key_hook(int keycode, void *param)
+void	set_change_values(float x, float y, float z, t_fdf *fdf)
 {
-	param = 0;
-	if (keycode == 53)
-		exit(1);
-	return (0);
-}
-
-void	initiate(t_fdf *fdf)
-{
-	if (fdf->total_col > fdf->total_row)
-		fdf->max = fdf->total_col;
-	else
-		fdf->max = fdf->total_row;
-	if (fdf->max < fdf->total_z)
-		fdf->max = fdf->total_z;
-	fdf->gap = 700 / fdf->max;
-	fdf->win_y = 1080;
-	fdf->win_x = 1920;
-	fdf->mlx = mlx_init();
-	fdf->win = mlx_new_window(fdf->mlx, fdf->win_x, fdf->win_y, "FdF 42");
-}
-
-int		read_file(int fd, t_fdf *fdf, char *argv1)
-{
-	t_count	count;
-
-	count.y = 0;
-	count.i = -1;
-	count.x = -1;
-	count.z = -1;
-	check_width(fd, 0, fdf);
-	close(fd);
-	fd = open(argv1, O_RDONLY);
-	if (!(parse(fd, fdf, count)))
-		ft_error("Error");
-	map_right(fdf);
-	map_down(fdf, 1, 0, 0);
-	return (1);
+	fdf->change_x = x;
+	fdf->change_y = y;
+	fdf->change_z = z;
 }
 
 int		main(int argc, char **argv)
@@ -72,14 +38,17 @@ int		main(int argc, char **argv)
 		ft_error("Error: filename does not contain fdf");
 	if (!(read_file(fd, &fdf, argv[1])))
 		return (0);
+	else
+		ft_putendl("Arrow: Move\n+/-: Zoom\n1/3: Rot\nc: color\nz/x: depth");
+	close(fd);
 	initiate(&fdf);
+	fdf.mlx = mlx_init();
+	fdf.win = mlx_new_window(fdf.mlx, fdf.win_x, fdf.win_y, "FdF 42");
 	make_pixel_cd(&fdf);
 	rotate(&fdf);
 	translate(&fdf);
 	draw_line(&fdf, 0);
-	close(fd);
-	mlx_key_hook(fdf.win, key_hook, &fdf);
+	mlx_key_hook(fdf.win, key_hook1, &fdf);
 	mlx_loop(fdf.mlx);
-	free(&fdf);
 	return (0);
 }

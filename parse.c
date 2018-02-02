@@ -6,26 +6,25 @@
 /*   By: dleong <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 23:50:32 by dleong            #+#    #+#             */
-/*   Updated: 2017/12/15 06:44:20 by dleong           ###   ########.fr       */
+/*   Updated: 2018/02/02 12:32:32 by dleong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	make_pixel_cd(t_fdf *fdf)
+void	map_right(t_fdf *fdf)
 {
 	t_pt	*head;
 	int		i;
-	int		j;
 
 	i = 0;
-	j = 1;
 	head = fdf->pt;
-	while (i <= fdf->total_node)
+	while (i < fdf->total_node)
 	{
-		fdf->pt->cd.x = (fdf->pt->cd.x - fdf->total_col / 2) * fdf->gap;
-		fdf->pt->cd.y = (fdf->pt->cd.y - fdf->total_row / 2) * fdf->gap;
-		fdf->pt->cd.z = fdf->pt->cd.z * 10;
+		if (i == 0)
+			fdf->pt->right = fdf->pt->next;
+		if ((((i + 1) % (fdf->total_col)) != 0) && (i != 0))
+			fdf->pt->right = fdf->pt->next;
 		fdf->pt = fdf->pt->next;
 		i++;
 	}
@@ -59,31 +58,23 @@ void	map_down(t_fdf *fdf, int a, int start, int i)
 	fdf->pt = head;
 }
 
-void	map_right(t_fdf *fdf)
-{
-	t_pt	*head;
-	int		i;
-
-	i = 0;
-	head = fdf->pt;
-	while (i < fdf->total_node)
-	{
-		if (i == 0)
-			fdf->pt->right = fdf->pt->next;
-		if ((((i + 1) % (fdf->total_col)) != 0) && (i != 0))
-			fdf->pt->right = fdf->pt->next;
-		fdf->pt = fdf->pt->next;
-		i++;
-	}
-	fdf->pt = head;
-}
-
 void	set_count(t_count *count)
 {
 	count->y = 0;
 	count->i = -1;
 	count->x = -1;
 	count->z = -1;
+}
+
+void	free_2d(char ***arr_2d)
+{
+	int i;
+
+	i = -1;
+	while ((*arr_2d)[++i])
+		ft_strdel(&(*arr_2d)[i]);
+	free(*arr_2d);
+	*arr_2d = 0;
 }
 
 int		parse(int fd, t_fdf *fdf, t_count count)
@@ -109,7 +100,10 @@ int		parse(int fd, t_fdf *fdf, t_count count)
 		count.x = -1;
 		count.z = -1;
 		count.y++;
+		free_2d(&fdf->map_line);
+		ft_strdel(&fdf->line);
 	}
+	fdf->pt->next = NULL;
 	fdf->total_node = count.i;
 	fdf->pt = head;
 	return (1);

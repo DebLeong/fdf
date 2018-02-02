@@ -6,7 +6,7 @@
 /*   By: dleong <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/14 00:24:07 by dleong            #+#    #+#             */
-/*   Updated: 2017/12/15 04:58:53 by dleong           ###   ########.fr       */
+/*   Updated: 2018/02/01 17:10:48 by dleong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,12 @@ void	b_algo(t_fdf *fdf)
 	t_bres	bres;
 
 	set_bres(&bres, fdf, 0);
-	mlx_pixel_put(fdf->mlx, fdf->win, bres.x, bres.y, 0xFFFFFF);
+	mlx_pixel_put(fdf->mlx, fdf->win, bres.x, bres.y, fdf->color);
 	if (bres.dy > bres.dx)
 		set_bres(&bres, fdf, 1);
 	while (bres.i++ <= bres.dx)
 	{
-		mlx_pixel_put(fdf->mlx, fdf->win, bres.x, bres.y, 0xFFFFFF);
+		mlx_pixel_put(fdf->mlx, fdf->win, bres.x, bres.y, fdf->color);
 		while (bres.p >= 0.0)
 		{
 			if (bres.swap)

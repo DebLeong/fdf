@@ -6,7 +6,7 @@
 /*   By: dleong <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/08 14:59:46 by dleong            #+#    #+#             */
-/*   Updated: 2017/12/15 06:43:22 by dleong           ###   ########.fr       */
+/*   Updated: 2018/02/02 12:42:11 by dleong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct		s_pt
 {
 	int				node;
 	t_cd			cd;
+	int				color;
 	struct s_pt		*next;
 	struct s_pt		*right;
 	struct s_pt		*down;
@@ -88,8 +89,13 @@ typedef struct		s_fdf
 	int				win_y;
 	int				gap;
 	float			max;
+	float			change_x;
+	float			change_y;
+	float			change_z;
+	int				color;
 }					t_fdf;
 
+void				free_2d(char ***arr_2d);
 void				ft_error(char *str);
 void				check_line(char *str);
 void				check_width(int fd, int i, t_fdf *fdf);
@@ -102,10 +108,18 @@ void				map_down(t_fdf *fdf, int a, int start, int i);
 void				make_pixel_cd(t_fdf *fdf);
 void				translate(t_fdf *fdf);
 void				rotate(t_fdf *fdf);
+void				rotate_z(t_fdf *fdf, int dir);
 void				draw_line(t_fdf *fdf, int i);
 float				sign(int x);
 void				set_bres(t_bres *bres, t_fdf *fdf, int swap);
 void				b_algo(t_fdf *fdf);
-int					key_hook(int keycode, void *param);
+int					key_hook1(int keycode, t_fdf *fdf);
+int					key_hook2(int keycode, t_fdf *fdf);
+int					key_hook3(int keycode, t_fdf *fdf);
+void				re_translate(t_fdf *fdf);
+void				scaling(t_fdf *fdf);
+void				z_scaling(t_fdf *fdf);
+void				random_color(t_fdf *fdf);
+void				set_change_values(float x, float y, float z, t_fdf *fdf);
 
 #endif
