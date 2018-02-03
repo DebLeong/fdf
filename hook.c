@@ -6,7 +6,7 @@
 /*   By: dleong <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 17:02:37 by dleong            #+#    #+#             */
-/*   Updated: 2018/02/02 13:50:14 by dleong           ###   ########.fr       */
+/*   Updated: 2018/02/03 04:40:35 by dleong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,6 @@ void	rotate_z(t_fdf *fdf, int dir)
 		fdf->pt->cd.y = fdf->pt->cd.y - (fdf->win_y / 2);
 		fdf->pt->cd.x = fdf->pt->cd.x * cos(0.125) - (dir * fdf->pt->cd.y * sin(0.125));
 		fdf->pt->cd.y = (dir * fdf->pt->cd.x * sin(0.125)) + fdf->pt->cd.y * cos(0.125);
-		fdf->pt->cd.x *= 1.01;
-		fdf->pt->cd.y *= 1.01;
 		fdf->pt->cd.x = fdf->pt->cd.x + (fdf->win_x / 2);
 		fdf->pt->cd.y = fdf->pt->cd.y + (fdf->win_y / 2);
 		fdf->pt = fdf->pt->next;
